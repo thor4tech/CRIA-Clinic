@@ -102,16 +102,6 @@ const Onboarding: React.FC<Props> = ({ onComplete }) => {
       }
   };
 
-  const getThemeGlow = () => {
-      switch(data.theme) {
-          case 'gold': return 'shadow-amber-500/20 border-amber-500/50';
-          case 'emerald': return 'shadow-emerald-500/20 border-emerald-500/50';
-          case 'blue': return 'shadow-blue-500/20 border-blue-500/50';
-          case 'violet': return 'shadow-violet-500/20 border-violet-500/50';
-          default: return 'shadow-rose-500/20 border-rose-500/50';
-      }
-  };
-
   const getThemeText = () => {
       switch(data.theme) {
           case 'gold': return 'text-amber-400';
@@ -123,7 +113,7 @@ const Onboarding: React.FC<Props> = ({ onComplete }) => {
   };
 
   return (
-    <div className="min-h-screen bg-[#0a0a0a] flex flex-col items-center justify-center p-4 md:p-8 text-white relative overflow-hidden font-sans selection:bg-rose-500/30">
+    <div className="min-h-screen bg-[#050505] flex flex-col items-center justify-center p-4 md:p-8 text-white relative overflow-hidden font-sans selection:bg-rose-500/30">
        
        {/* Mesh Background */}
       <div className="absolute inset-0 w-full h-full overflow-hidden pointer-events-none">
@@ -132,7 +122,7 @@ const Onboarding: React.FC<Props> = ({ onComplete }) => {
          <div className="absolute top-[40%] left-[40%] w-[300px] h-[300px] bg-white/5 rounded-full blur-[80px]"></div>
       </div>
 
-      <div className={`max-w-2xl w-full z-10 transition-all duration-500 ${isProcessing ? 'scale-95 opacity-90' : 'scale-100'}`}>
+      <div className={`max-w-xl w-full z-10 transition-all duration-500 ${isProcessing ? 'scale-95 opacity-90' : 'scale-100'}`}>
         
         {/* Header */}
         <div className="text-center mb-8 animate-fade-in-down">
@@ -149,7 +139,7 @@ const Onboarding: React.FC<Props> = ({ onComplete }) => {
         </div>
 
         {/* Main Card */}
-        <div className={`bg-stone-900/40 backdrop-blur-2xl border border-white/10 p-1 rounded-3xl shadow-2xl relative overflow-hidden transition-all duration-500 ${isProcessing ? 'h-[400px]' : 'min-h-[500px]'}`}>
+        <div className={`bg-stone-900/60 backdrop-blur-xl border border-white/10 p-1 rounded-3xl shadow-2xl relative overflow-hidden transition-all duration-500 ${isProcessing ? 'h-[400px]' : 'min-h-[500px]'}`}>
             
             {!isProcessing && (
                 <div className="absolute top-0 left-0 right-0 h-1 bg-white/5">
@@ -160,7 +150,7 @@ const Onboarding: React.FC<Props> = ({ onComplete }) => {
                 </div>
             )}
 
-            <div className="p-6 md:p-8 h-full flex flex-col">
+            <div className="p-8 h-full flex flex-col">
                 {isProcessing ? (
                     <div className="flex-1 flex flex-col items-center justify-center text-center animate-fade-in">
                         <div className="relative mb-8">
@@ -174,36 +164,69 @@ const Onboarding: React.FC<Props> = ({ onComplete }) => {
                     </div>
                 ) : (
                     <>
-                        {/* STEPS SIMPLIFIED FOR BREVITY - RETAINING LOGIC */}
+                        {/* STEPS */}
                         {step === 1 && (
                             <div className="flex-1 animate-slide-in-right space-y-6">
-                                <div><h2 className="text-2xl font-bold mb-1">Identidade da Clínica</h2></div>
-                                <div className="space-y-4">
-                                    <div className="space-y-1">
-                                        <label className="text-xs font-bold text-stone-500 uppercase ml-1">Nome da Clínica</label>
-                                        <input autoFocus value={data.clinicName} onChange={(e) => setData({...data, clinicName: e.target.value})} className="w-full bg-stone-800/50 border border-stone-700 rounded-xl px-4 py-3.5 text-white focus:outline-none focus:ring-2 focus:ring-rose-500/50" placeholder="Ex: Belle Clinic"/>
+                                <div><h2 className="text-2xl font-bold mb-2 text-white">Identidade da Clínica</h2></div>
+                                <div className="space-y-5">
+                                    <div className="space-y-2">
+                                        <label className="text-xs font-bold text-stone-400 uppercase ml-1">Nome da Clínica</label>
+                                        <input 
+                                            autoFocus 
+                                            value={data.clinicName} 
+                                            onChange={(e) => setData({...data, clinicName: e.target.value})} 
+                                            className="w-full bg-white border border-transparent rounded-xl px-4 py-4 text-stone-900 placeholder-stone-400 focus:outline-none focus:ring-4 focus:ring-rose-500/30 font-medium text-lg shadow-lg" 
+                                            placeholder="Ex: Belle Clinic"
+                                        />
                                     </div>
-                                    <input value={data.ownerName} onChange={(e) => setData({...data, ownerName: e.target.value})} className="w-full bg-stone-800/50 border border-stone-700 rounded-xl px-4 py-3 text-white" placeholder="Seu Nome"/>
+                                    <div className="space-y-2">
+                                        <label className="text-xs font-bold text-stone-400 uppercase ml-1">Seu Nome</label>
+                                        <input 
+                                            value={data.ownerName} 
+                                            onChange={(e) => setData({...data, ownerName: e.target.value})} 
+                                            className="w-full bg-white border border-transparent rounded-xl px-4 py-4 text-stone-900 placeholder-stone-400 focus:outline-none focus:ring-4 focus:ring-rose-500/30 font-medium shadow-lg" 
+                                            placeholder="Ex: Dra. Juliana"
+                                        />
+                                    </div>
                                 </div>
                             </div>
                         )}
 
                         {step === 2 && (
                              <div className="flex-1 animate-slide-in-right space-y-6">
-                                <div><h2 className="text-2xl font-bold mb-1">Localização</h2></div>
-                                <input value={data.cep} onChange={(e) => setData({...data, cep: e.target.value})} onBlur={handleCepBlur} className="w-full bg-stone-800/50 border border-stone-700 rounded-xl px-4 py-3.5 text-white" placeholder="CEP"/>
-                                <input value={data.address} onChange={(e) => setData({...data, address: e.target.value})} className="w-full bg-stone-800/50 border border-stone-700 rounded-xl px-4 py-3.5 text-white" placeholder="Endereço"/>
+                                <div><h2 className="text-2xl font-bold mb-2 text-white">Localização</h2></div>
+                                <div className="space-y-4">
+                                    <div className="space-y-2">
+                                        <label className="text-xs font-bold text-stone-400 uppercase ml-1">CEP</label>
+                                        <input 
+                                            value={data.cep} 
+                                            onChange={(e) => setData({...data, cep: e.target.value})} 
+                                            onBlur={handleCepBlur} 
+                                            className="w-full bg-white border border-transparent rounded-xl px-4 py-3.5 text-stone-900 placeholder-stone-400 focus:outline-none focus:ring-4 focus:ring-rose-500/30" 
+                                            placeholder="00000-000"
+                                        />
+                                    </div>
+                                    <div className="space-y-2">
+                                        <label className="text-xs font-bold text-stone-400 uppercase ml-1">Endereço</label>
+                                        <input 
+                                            value={data.address} 
+                                            onChange={(e) => setData({...data, address: e.target.value})} 
+                                            className="w-full bg-white border border-transparent rounded-xl px-4 py-3.5 text-stone-900 placeholder-stone-400 focus:outline-none focus:ring-4 focus:ring-rose-500/30" 
+                                            placeholder="Endereço Completo"
+                                        />
+                                    </div>
+                                </div>
                              </div>
                         )}
 
                         {step === 3 && (
                             <div className="flex-1 animate-slide-in-right space-y-6">
-                                <div><h2 className="text-2xl font-bold mb-1">Especialidades</h2></div>
+                                <div><h2 className="text-2xl font-bold mb-2 text-white">Especialidades</h2></div>
                                 <div className="grid grid-cols-2 gap-3 max-h-[300px] overflow-y-auto pr-2 custom-scrollbar">
                                     {SPECIALTIES.map(spec => (
-                                        <button key={spec} onClick={() => toggleSpecialty(spec)} className={`p-4 rounded-xl border text-left flex items-center justify-between ${data.specialties.includes(spec) ? `bg-white text-black border-white` : 'bg-stone-800/30 border-stone-700 text-stone-300'}`}>
-                                            <span className="text-sm font-medium">{spec}</span>
-                                            {data.specialties.includes(spec) && <Check size={16} className="text-black"/>}
+                                        <button key={spec} onClick={() => toggleSpecialty(spec)} className={`p-4 rounded-xl border text-left flex items-center justify-between transition-all ${data.specialties.includes(spec) ? `bg-white text-stone-900 border-white shadow-lg scale-[1.02]` : 'bg-stone-800/40 border-stone-700 text-stone-300 hover:bg-stone-800/60'}`}>
+                                            <span className="text-sm font-medium leading-tight">{spec}</span>
+                                            {data.specialties.includes(spec) && <Check size={16} className="text-stone-900 shrink-0"/>}
                                         </button>
                                     ))}
                                 </div>
@@ -212,10 +235,10 @@ const Onboarding: React.FC<Props> = ({ onComplete }) => {
 
                         {step === 4 && (
                             <div className="flex-1 animate-slide-in-right space-y-6">
-                                <div><h2 className="text-2xl font-bold mb-1">Foco Principal</h2></div>
+                                <div><h2 className="text-2xl font-bold mb-2 text-white">Foco Principal</h2></div>
                                 <div className="space-y-3">
                                     {GOALS.map(goal => (
-                                        <button key={goal.id} onClick={() => setData({...data, primaryGoal: goal.id})} className={`w-full p-4 rounded-xl border text-left flex items-center gap-4 ${data.primaryGoal === goal.id ? `bg-gradient-to-r from-rose-500 to-rose-600 border-rose-500 text-white` : 'bg-stone-800/30 border-stone-700 text-stone-300'}`}>
+                                        <button key={goal.id} onClick={() => setData({...data, primaryGoal: goal.id})} className={`w-full p-4 rounded-xl border text-left flex items-center gap-4 transition-all ${data.primaryGoal === goal.id ? `bg-gradient-to-r from-rose-500 to-rose-600 border-rose-500 text-white shadow-lg scale-[1.02]` : 'bg-stone-800/40 border-stone-700 text-stone-300 hover:bg-stone-800/60'}`}>
                                             <goal.icon size={20} /> <span className="block font-bold text-sm">{goal.label}</span>
                                         </button>
                                     ))}
@@ -225,7 +248,7 @@ const Onboarding: React.FC<Props> = ({ onComplete }) => {
 
                         {step === 5 && (
                             <div className="flex-1 animate-slide-in-right space-y-6">
-                                <div><h2 className="text-2xl font-bold mb-1">Estilo Visual</h2></div>
+                                <div><h2 className="text-2xl font-bold mb-2 text-white">Estilo Visual</h2></div>
                                 <div className="grid grid-cols-1 gap-3">
                                     {THEMES.map(theme => (
                                         <button key={theme.id} onClick={() => setData({...data, theme: theme.id})} className={`p-3 rounded-xl border flex items-center justify-between transition-all ${data.theme === theme.id ? `bg-stone-800 border-white/20 ring-1 ring-white/10` : 'border-transparent hover:bg-white/5'}`}>
